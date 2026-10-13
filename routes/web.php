@@ -5,14 +5,18 @@ use App\Http\Controllers\SiteController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::get('/say/{message?}', [SiteController::class, 'say'])->name("site.say");
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
-//для Case 3
-Route::get('/entry', [SiteController::class, 'entry'])->name("entry.form");
-Route::post('/entry', [SiteController::class, 'entryStore'])->name("entry.store");
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 
-//для Case 4
-Route::view('about', 'site.about')->name("site.about");
-Route::view('contact', 'site.contact')->name("site.contact");
+// Страница услуг с формой
+Route::get('/services', [SiteController::class, 'services'])->name('services.form');
+
+// Обработка отправки формы заявки через контроллер
+Route::post('/services', [SiteController::class, 'storeService'])->name('services.store');

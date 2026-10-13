@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\EntryRequest; //імпорт реквесту
+use App\Http\Requests\EntryRequest; // Импортируем наш класс запроса
 
 class SiteController extends Controller
 {
-    //Метод з кейс 0 / кейс 1
-    public function say(string $message = 'Привіт')
+    // Показать страницу услуг с формой
+    public function services()
     {
-        return view('site.say', ['message' => $message]);
+        return view('services');
     }
 
-    //Метод з кейс 3
-    public function entry()
+    // Обработка формы с использованием EntryRequest
+    public function storeService(EntryRequest $request)
     {
-        return view('site.entry');
-    }
-    public function entryStore(EntryRequest $request)
-    {
-        return view('site.entry-confirm', $request->validated());
+        // Данные уже прошли валидацию правила из EntryRequest!
+        // Получаем проверенные данные:
+        $validated = $request->validated();
+
+        // Передаем их на страницу успеха
+        return view('services-success', $validated);
     }
 }
