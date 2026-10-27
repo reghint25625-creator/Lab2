@@ -15,8 +15,8 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-// Страница услуг с формой
-Route::get('/services', [SiteController::class, 'services'])->name('services.form');
+// Сторінка форми запису на ремонт
+Route::get('/services', [SiteController::class, 'repairForm'])->name('services.form');
 
-// Обработка отправки формы заявки через контроллер
-Route::post('/services', [SiteController::class, 'storeService'])->name('services.store');
+// Обробка відправки форми
+Route::post('/services', [SiteController::class, 'storeRepair'])->name('services.store');

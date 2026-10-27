@@ -17,18 +17,29 @@
             </div>
 
             <div>
-                <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #333;">Марка та модель авто:</label>
-                <input type="text" name="car_model" value="{{ old('car_model') }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #333;">Марка авто:</label>
+                <select name="car_model" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                    <option value="">-- Оберіть марку --</option>
+                    @foreach(App\Enums\CarModel::cases() as $car)
+                        <option value="{{ $car->value }}" {{ old('car_model') === $car->value ? 'selected' : '' }}>
+                            {{ $car->value }}
+                        </option>
+                    @endforeach
+                </select>
                 @error('car_model') <span style="color: red; font-size: 13px;">{{ $message }}</span> @enderror
             </div>
 
             <div>
                 <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #333;">Вид послуги:</label>
                 <select name="service_type" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
-                    <option value="Комп'ютерна діагностика">Комп'ютерна діагностика</option>
-                    <option value="Заміна мастила та фільтрів">Заміна мастила та фільтрів</option>
-                    <option value="Ремонт підвіски / ходової">Ремонт підвіски / ходової</option>
+                    <option value="">-- Оберіть послугу --</option>
+                    @foreach(App\Enums\ServiceType::cases() as $service)
+                        <option value="{{ $service->value }}" {{ old('service_type') === $service->value ? 'selected' : '' }}>
+                            {{ $service->value }}
+                        </option>
+                    @endforeach
                 </select>
+                @error('service_type') <span style="color: red; font-size: 13px;">{{ $message }}</span> @enderror
             </div>
 
             <div>
@@ -39,7 +50,7 @@
 
             <div>
                 <label style="display: block; font-weight: bold; margin-bottom: 5px; color: #333;">Примітки:</label>
-                <textarea name="notes" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"></textarea>
+                <textarea name="notes" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">{{ old('notes') }}</textarea>
             </div>
 
             <button type="submit" style="background-color: #1f8135; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px;">

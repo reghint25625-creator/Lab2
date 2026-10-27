@@ -2,43 +2,35 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\CarModel;
+use App\Enums\ServiceType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class EntryRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true; // Разрешаем выполнение запроса
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
             'client_name'  => 'required|string|max:255',
-            'car_model'    => 'required|string|max:255',
-            'service_type' => 'required|string',
+            'car_model'    => ['required', new Enum(CarModel::class)],
+            'service_type' => ['required', new Enum(ServiceType::class)],
             'booking_time' => 'required|date',
             'notes'        => 'nullable|string',
         ];
     }
 
-    /**
-     * Custom error messages in Ukrainian.
-     */
     public function messages(): array
     {
         return [
             'client_name.required'  => 'Будь ласка, введіть ваше ім\'я.',
-            'car_model.required'    => 'Будь ласка, вкажіть модель автомобіля.',
-            'service_type.required' => 'Оберіть вид послуги.',
+            'car_model.required'    => 'Будь ласка, оберіть марку авто.',
+            'service_type.required' => 'Будь ласка, оберіть вид послуги.',
             'booking_time.required' => 'Будь ласка, оберіть бажаний час візиту.',
         ];
     }
